@@ -11,9 +11,8 @@
   "dependencies": {
     "@next/font": "^13.5.4",
     "@next/mdx": "^13.5.4",
-    "@upstash/redis": "^1.23.3",
+    "@upstash/redis": "^1.27.1",
     "contentlayer": "^0.3.4",
-    "eslint": "^8.56.0",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.284.0",
     "markdown-wasm": "^1.2.0",
