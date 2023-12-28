@@ -6,9 +6,10 @@ import { Card } from "../components/card";
 import { Navigation } from "../components/nav";
 import { Article } from "./article";
 
-const redis = Redis.fromEnv();
+export const revalidate = 0;
 
-export const revalidate = 60;
+const redis = Redis.fromEnv()
+
 export default async function ProjectsPage() {
   const views = (
     await redis.mget<number[]>(
