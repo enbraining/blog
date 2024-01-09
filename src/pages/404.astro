@@ -1,5 +1,5 @@
 ---
-import BaseHeader from '~/components/base-header.astro';
+import Header from '~/components/header.astro';
 import { useI18n } from '~/i18n/utils';
 import Main from '~/layouts/main.astro';
 
@@ -8,9 +8,9 @@ const { t, p } = useI18n(url);
 ---
 
 <Main data-animate data-animate-speed="slow">
-  <BaseHeader title="404">
+  <Header title="404">
     <p class="text-sm text-second">{t('404.desc')}</p>
-  </BaseHeader>
+  </Header>
   <section class="my-14">
     <a href={p('/')} class="link">cd ..</a>
   </section>

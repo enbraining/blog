@@ -4,9 +4,9 @@ import '~/styles/mdx.css';
 import { type CollectionEntry } from 'astro:content';
 import { format } from 'date-fns';
 
-import BaseHeader from '~/components/base-header.astro';
 import BaseNav from '~/components/base-nav';
 import { GiscusSection } from '~/components/giscus';
+import Header from '~/components/header.astro';
 import MediumZoomScript from '~/components/medium-zoom-script.astro';
 import TableOfContent from '~/components/table-of-content';
 import type { Language } from '~/i18n/ui';
@@ -67,12 +67,12 @@ const toc = parseToc(post.body);
       client:load
     />
   </BaseNav>
-  <BaseHeader {title}>
+  <Header {title}>
     <time class="text-sm text-second">
       {format(date, 'MMM dd, yyyy')}
     </time>
     <p class="text-sm pt-5">{description}</p>
-  </BaseHeader>
+  </Header>
   <article data-animate data-animate-speed="fast" class="mdx">
     <Content />
   </article>

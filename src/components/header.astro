@@ -1,0 +1,47 @@
+---
+import { EmailIcon, GithubIcon, MdiLinkedin, TwitterXIcon } from './ui/icons';
+
+
+type Props = {
+  title: string;
+};
+
+const { props, url } = Astro;
+const { title } = props;
+---
+
+<div class="flex items-center">
+  <h1 class="-mb-0.5 font-semibold leading-9 text-heading">{title}</h1>
+  <div data-animate class="mt-1 flex gap-0.5">
+    <a
+      style="--lv-wait: 1;"
+      class="rounded p-1 transition-colors hover:bg-selection hover:text-body"
+      href="mailto:me@xolving.com"
+    >
+      <EmailIcon />
+    </a>
+    <a
+      style="--lv-wait: 1;"
+      class="rounded p-1 transition-colors hover:bg-selection hover:text-body"
+      href="https://github.com/enbraining"
+      target="_blank"
+    >
+      <GithubIcon />
+    </a>
+    <a
+      style="--lv-wait: 1;"
+      class="rounded p-1 transition-colors hover:bg-selection hover:text-body"
+      href="https://twitter.com/enbraining"
+      target="_blank"
+    >
+      <TwitterXIcon />
+    </a>
+    <a
+      style="--lv-wait: 1;"
+      class="rounded p-1 transition-colors hover:bg-selection hover:text-body"
+      href="https://www.linkedin.com/in/enbraining/"
+    >
+      <MdiLinkedin />
+    </a>
+  </div>
+</div>
