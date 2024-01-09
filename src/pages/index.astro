@@ -29,7 +29,7 @@ const yearList = Object.entries(
 ---
 
 <Main>
-  <BaseHeader title={'don\'t stop'} />
+  <BaseHeader title={t('index.name')} />
   <div data-animate data-animate-speed="slow">
     <div class="my-7" set:html={t('index.desc')} />
     <div class="my-7">
@@ -79,12 +79,13 @@ const yearList = Object.entries(
                 <li style={`--start: ${index * 75}ms;`}>
                   <a
                     href={post.href}
-                    class="flex items-center transition-opacity duration-300 hover:!opacity-100 group-hover:opacity-60"
+                    class="items-center transition-opacity duration-300 hover:!opacity-100 group-hover:opacity-60"
                   >
                     <span class="text-heading">{post.title}</span>
-                    <span class="flex-shrink-0 px-2 text-sm text-second">
+                    <span class="px-2 text-sm text-second">
                       {format(new Date(post.date), 'MM. dd.')}
                     </span>
+                    <div class="text-sm">{post.description}</div>
                   </a>
                 </li>
               );
