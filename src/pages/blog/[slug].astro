@@ -1,0 +1,37 @@
+---
+import BlogPostMeta from "../../components/BlogPostMeta.astro";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+import { Post, fetchPost } from "src/lib/supabase";
+import markdownIt from 'markdown-it'
+
+const md = markdownIt()
+
+export async function getStaticPaths() {
+  const posts = await fetchPost() ?? []
+
+  return posts.map((post: Post) => {
+    return { params: { slug: post.title.replace(/ /g, '-') } };
+  });
+}
+
+const { slug } = Astro.params;
+if (typeof slug !== "string") {
+  throw Error(`slug should be string. Received: ${slug}`);
+}
+
+const posts = await fetchPost() ?? []
+const post = posts.find((post: Post) => post.title.replace(/ /g, '-') === slug)
+
+const content = md.render(post.description)
+---
+
+<ContentLayout title={post.title} date={post.date}>
+  <BlogPostMeta
+    title={post.title}
+    description={post.description}
+    publishDate={post.date}
+    pagePath={`/blog/${slug}`}
+    slot="meta"
+  />
+  <div set:html={content} slot="content"></div>
+</ContentLayout>

@@ -1,0 +1,46 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import PageMeta from "../components/PageMeta.astro";
+import { SITE_TITLE } from "../config";
+import { Post, fetchPost } from "src/lib/supabase";
+
+const posts = await fetchPost() ?? [];
+---
+
+<PageLayout>
+  <PageMeta title={`${SITE_TITLE}`} slot="meta" />
+  <section slot="main">
+    <ul>
+      {
+        posts.map((post: Post) => {
+          const formattedDate = new Date(
+            post.date
+          ).toLocaleDateString("en-us", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          });
+          return (
+            <li class="grid grid-cols-[1fr] md:grid-cols-[1fr_auto] mb-3 md:gap-2 items-start">
+              <div class="title">
+                {
+                  <a
+                    href={`/blog/${post.title.replace(/ /g, '-')}`}
+                    class="unset hover:text-text-link"
+                  >
+                    {post.title}
+                  </a>
+                }
+              </div>
+              <div class="text-text-muted text-sm italic">
+                <time datetime={post.date}>
+                  {formattedDate}
+                </time>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</PageLayout>

@@ -1,0 +1,40 @@
+---
+import { fetchPost } from "src/lib/supabase";
+import { differenceInDays, parseISO } from 'date-fns';
+
+const posts = await fetchPost() ?? [];
+
+const today = new Date();
+const endDate = parseISO('2023-10-27');
+const diffInDays = differenceInDays(today, endDate);
+---
+
+<section class="mb-8">
+  <div class="mb-4">
+    <div class="font-bold flex gap-x-4">
+      <div>
+        <p class="inline text-2xl">{diffInDays}</p>
+        <p class="inline">days</p>
+      </div>
+      <div>
+        <p class="inline text-2xl">{posts.length}</p>
+        <p class="inline">Posts</p>
+      </div>
+    </div>
+    <h1
+      class="font-extrabold text-5xl md:text-6xl tracking-tight pt-4 pb-2 overflow-hidden"
+    >
+      <span
+        class="bg-gradient-to-br from-[#66f278] via-[#66f278] to-[#66f2b1] dark:from-primary-main dark:via-primary-main dark:to-primary-main bg-clip-text text-transparent"
+      >
+        Donghak Kim
+      </span>
+    </h1>
+    <p class="text-2xl pb-4">Full-stack Developer</p>
+  </div>
+  <div>
+    <p class="mb-5">
+      Kotlin, Typescript
+    </p>
+  </div>
+</section>
