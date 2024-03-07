@@ -22,14 +22,19 @@ const posts = await fetchPost() ?? [];
           });
           return (
             <li class="grid grid-cols-[1fr] md:grid-cols-[1fr_auto] mb-3 md:gap-2 items-start">
-              <div class="title">
+              <div class="title mb-5">
                 {
                   <a
                     href={`/blog/${post.title.replace(/ /g, '-')}`}
-                    class="unset hover:text-text-link"
+                    class="unset hover:text-text-link text-2xl font-bold"
                   >
                     {post.title}
                   </a>
+                  <p class="d text-stone-400">
+                    {
+                      post.description.substring(0, 160)
+                    }  
+                  </p>
                 }
               </div>
               <div class="text-text-muted text-sm italic">
