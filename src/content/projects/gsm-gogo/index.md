@@ -8,6 +8,8 @@ repoURL: "https://github.com/GSM-MSG/SMS-Backend"
 
 ## 프로젝트 요약
 
+> Docker, Github Actions, AWS EC2, Spring Batch, Multi Module
+
 체육대회를 재밌게 즐기기 위해서 미니게임, 경기 알림 등의 기능이 포함된 프로젝트를 개발했습니다.
 
 > 2024.08 - 2024.10

@@ -8,6 +8,8 @@ repoURL: "https://github.com/GSM-MSG/SMS-Backend"
 
 ## 프로젝트 요약
 
+> AWS S3, Redis, Spring Boot, Hexagonal Architecture
+
 백엔드 개발자로 참여하였던 프로젝트로, 학교 내부에서 기업에 제출할 목적으로 사용하던 기존의 종이책자를 브라우저와 앱으로 사용할 수 있게 하는 것을 목적으로 개발되었습니다.
 
 > 2023.04 -

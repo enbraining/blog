@@ -8,6 +8,8 @@ repoURL: "https://github.com/xolving/prisism-backend"
 
 ## 프로젝트 요약
 
+> Spring Boot, WebSocket, Next.js, Kotlin, Nginx
+
 누구나 사용할 수 있는 랜덤채팅 서비스로 안정적인 소켓 연결성과 아키텍쳐링을 목적으로 개발한 토이 프로젝트입니다.
 
 > 2024.06 - 2024.06

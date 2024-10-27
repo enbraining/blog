@@ -8,6 +8,8 @@ repoURL: "https://github.com/GSM-MSG/SMS-Backend"
 
 ## 프로젝트 요약
 
+> AWS ECR, AWS EC2, Docker, Nginx
+
 클라우드타입에서 AWS으로 마이그레이션을 맡았으며, 광주소프트웨어마이스터고에서 다양한 서비스들에 사용되는 통합 소셜 로그인 서비스입니다.
 
 ### MariaDB 인코딩 문제
