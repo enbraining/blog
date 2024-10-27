@@ -1,0 +1,29 @@
+---
+title: "MacOS에 MySQL 설치 중 발생한 오류"
+description: "Homebrew로 MySQL 9.0.1_5 설치 중 발생한 오류"
+date: 2024-10-25
+---
+
+import Callout from "@/components/Callout.astro";
+
+---
+
+## 오류 상황
+
+Brew로 MySQL 최신버전인 9.0.1_5를 설치하고 있었다.
+
+```
+brew install mysql
+```
+
+하지만 다음과 같은 경고가 발생했고, 조금 더 위의 로그를 살펴보니 어떠한 폴더는 사용되지 않으니 삭제하라는 식의 문구를 발견했다. `sudo rm -r /usr/local/var/mysql`로 지워주고 `brew reinstall mysql` 재설치 해보니까 경고 메시지가 사라졌다.
+
+> The designated data directory /usr/local/var/mysql/ is unusable. You can remove all files that the server added to it.
+
+```
+Warning: The post-install step did not complete successfully
+You can try again using:
+  brew postinstall mysql
+```
+
+그리고 `brew services start mysql`로 시작해주자, 기존에 `mysql_secure_installation`에서 비밀번호를 입력하면 뜨는 Can't Connect to local MySQL Server 에러가 사라졌다.

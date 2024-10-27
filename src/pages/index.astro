@@ -1,11 +1,11 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import Container from "@components/Container.astro";
-import { SITE, HOME, SOCIALS } from "@consts";
 import ArrowCard from "@components/ArrowCard.astro";
+import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
-import { getCollection } from "astro:content";
+import { HOME, SITE, SOCIALS } from "@consts";
+import Layout from "@layouts/Layout.astro";
 import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
@@ -24,46 +24,21 @@ const projects: CollectionEntry<"projects">[] = (
   <Container>
     <aside data-pagefind-ignore>
       <h1 class="font-semibold text-black dark:text-white">
-        Introducing Astro Micro 🔬
+        탐구하고 찾아내는 개발자
       </h1>
       <div class="space-y-16">
         <section>
           <article class="space-y-4">
             <span>
               <p>
-                Astro Micro is an accessible theme for <Link
-                  href="https://astro.build/">Astro</Link
-                >. It's a fork of
-                <Link href="https://github.com/markhorn-dev">
-                  Mark Horn's
-                </Link> popular theme <Link
-                  href="https://astro.build/themes/details/astronano/"
-                  >Astro Nano</Link
-                >. Like Nano, Micro comes with zero frameworks installed.
+                안녕하세요. 탐구를 통해 성장하는 개발자, 김동학입니다. 주로
+                Next.js, Nest.js, Kotlin, Typescript를 사용해서 개발합니다.
               </p>
               <p>
-                Micro adds features like <Link href="https://pagefind.app/"
-                  >Pagefind</Link
-                > for search, <Link href="https://giscus.app">Giscus</Link> for comments,
-                and more. For a full list of changes, see this <Link
-                  href="/blog/00-micro-changelog">blog post</Link
-                >.
+                게임 이론에도 관심이 많으며, 시간이 날 때마다 레이캐스팅을 직접
+                구현해보면서 DOOM과 같은 게임을 만드는 것을 노리고 있습니다.
               </p>
-            </span>
-            <span class="animate">
-              <p>
-                Micro still comes with everything great about Nano — full type
-                safety, a sitemap, an RSS feed, and Markdown + MDX support.
-                Styled with TailwindCSS and preconfigured with system, light,
-                and dark themes.
-              </p>
-              <p>
-                Visit
-                <Link href="https://github.com/trevortylerlee/astro-micro">
-                  Astro Micro on GitHub
-                </Link>
-                to fork the repository to get started.
-              </p>
+              <p>광주소프트웨어마이스터고에 재학 중 입니다.</p>
             </span>
           </article>
         </section>
@@ -109,10 +84,7 @@ const projects: CollectionEntry<"projects">[] = (
             Let's Connect
           </h2>
           <article>
-            <p>
-              If you want to get in touch with me about something or just to say
-              hi, reach out on social media or send me an email.
-            </p>
+            <p>질문이나 하고싶은 말이 있다면 아래로 연락해주세요.</p>
           </article>
           <ul class="not-prose flex flex-wrap gap-2">
             {
