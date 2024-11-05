@@ -1,0 +1,47 @@
+---
+title: "누적합에 대해서 알아보자"
+description: ""
+date: 2024-11-06
+---
+
+import Callout from "@/components/Callout.astro";
+
+---
+
+누적합이란 수열에서 각 인덱스까지의 합을 구하는 것입니다. ARRAY[A ~ B] 까지의 누적합을 구하고 싶다면, B까지의 누적합에서 A - 1 까지의 누적합을 빼주면 됩니다.
+
+## Source
+
+제 경우에는 배열 맨 앞에 빈 배열을 만들기가 싫어서 조건문을 사용해서 인덱스가 1 이하일 경우에는 빼지 않습니다.
+
+```c++
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false); cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    int n_array[n];
+
+    for(int x = 0; x < n; x++) {
+        cin >> n_array[x];
+    }
+
+    for(int x = 1; x < n; x++) {
+        n_array[x] = n_array[x - 1] + n_array[x];
+    }
+
+    int m;
+    cin >> m;
+    for(int x = 0; x < m; x++) {
+        int i, j;
+        cin >> i >> j;
+
+        if(i <= 1) cout << n_array[j - 1] << '\n';
+        else cout << n_array[j - 1] - n_array[i - 2] << '\n';
+    }
+}
+```
