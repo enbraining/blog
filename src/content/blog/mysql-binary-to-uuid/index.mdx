@@ -1,0 +1,34 @@
+---
+title: "How to convert Binary to UUID in MySQL"
+description: ""
+date: 2024-11-13
+---
+
+import Callout from "@/components/Callout.astro";
+
+---
+
+MySQL CLI에서 테이블을 조회해보면, id가 UUID인 경우에 그대로 뜨지 않고 바이너리 형태(0xA43...)로 데이터가 뜨는 것을 볼 수 있다.
+
+예시로 INSERT문에서 Foreign Key를 바이너리 형태의 값 그대로 입력하게 되면 에러가 발생할 수 있기 때문에 이를 서로 변환해줄 필요가 있다. 이번 글에선 바이너리 값을 UUID로, 또 그 반대에 대해서도 알아볼 것이다.
+
+# 변환하기
+
+UUID_TO_BIN을 통해서 UUID를 바이너리 값으로 변환할 수 있고, BIN_TO_UUID로 바이너리 값을 UUID로 변환할 수 있다.
+
+## 예시
+
+```sql
+UUID_TO_BIN(uuid())
+0xF23223F268414AAE8342058147CE6A78
+
+SELECT UUID_TO_BIN(id), email, name FROM user;
++------------------------------------+---------------------+---------+
+| UUID_TO_BIN(id)                    | email               | name    |
++------------------------------------+---------------------+---------+
+| 0x64C91F0A69D4410197D40C9F68025ACA | steve@gmail.com     | STEVE   |
+| 0xA43F444FC7354D6A95629DF6F407E2AB | hello@gmail.com     | HELLO   |
++------------------------------------+---------------------+---------+
+
+INSERT INTO user (id, email, name) VALUES (UUID_TO_BIN(uuid()), 'whatsup@gmail.com', 'whatsup');
+```
