@@ -1,0 +1,90 @@
+---
+title: "Using ATmega128 Interrupt"
+description: "#include <avr/interrupt.h>"
+date: 2024-11-14
+---
+
+import Callout from "@/components/Callout.astro";
+
+---
+
+인터럽트는 특정한 이벤트가 발생되었을 때 기존의 프로그램을 중단하고, 인터럽트 처리 프로그램을 실행하고 다시 복귀하는 일련의 작업이다.
+
+이러한 인터럽트를 처리하는 프로그램을 Interrupt Service Routine(ISR), Interrupt Handler라고 한다.
+
+## Interrupt in ATmega128
+
+ATmega128에는 외부 인터럽트 8개의 핀과 타이머 인터럽트 등의 인터럽트로 구성된다.
+
+### SREG (Status REGister)
+
+인터럽트의 상태를 정의하는 상태 비트이다.
+
+```c
+// 전체 인터럽트를 허용한다.
+SREG = 0x80;
+```
+
+## EIMSK
+
+특정 외부 인터럽트를 활성화시키기 위한 마스크 레지스터이다. 모든 비트의 기본 값은 0이다.
+
+> INT7, INT6, INT5, INT4, INT3, INT2, INT1, INT0
+
+```c
+// INT0과 INT1을 활성화시킨다.
+EIMSK = (1 << INT0) | (1 << INT1);
+
+// 혹은 이렇게도 쓸 수 있다.
+EIMSK = 0b00000011;
+```
+
+### EICRA
+
+외부 인터럽트를 제어하는 레지스터이다. 모든 비트의 값은 기본적으로 False, 0이다.
+
+> ISC31, ISC30, ISC21, ISC20, ISC11, ISC10, ISC01, ISC00
+
+|ISCn1|ISCn0|Description|
+|---|---|---|
+|0|0|INT$n$ 핀의 Low 레벨 신호 입력이 인터럽트를 발생한다.|
+|0|1|(Reserved)|
+|1|0|INT$n$ 핀의 하강 에지가 인터럽트를 비동기적으로 발생한다.|
+|1|1|INT$n$ 핀의 상승 에지가 인터럽트를 비동기적으로 발생한다.|
+
+```c
+// ISC31, ISC30을 1과 0으로 설정해서 하강 에지를 사용하도록 한다.
+EICRA = 0x10000000;
+
+// 혹은 이렇게도 쓸 수 있다.
+EICRA = (1 << ISC31);
+
+// INT3과 INT2에 상승 에지를 사용하도록 하기위해서 ISC31, ISC30, ISC21, ISC20을 전부 1로 설정한다.
+EICRA = 0x11110000;
+EICRA = (1 << ISC31) | (1 << ISC30) | (1 << ISC21) | (1 << ISC20);
+```
+
+### EICRB
+
+외부 인터럽트를 제어하는 레지스터이다. 모든 비트의 값은 기본적으로 False, 0이다.
+
+> ISC71, ISC70, ISC61, ISC60, ISC51, ISC50, ISC41, ISC40
+
+|ISCn1|ISCn0|Description|
+|---|---|---|
+|0|0|INT$n$ 핀의 Low 레벨 신호 입력이 인터럽트를 발생한다.|
+|0|1|(Reserved)|
+|1|0|INT$n$ 핀의 하강 에지가 인터럽트를 비동기적으로 발생한다.|
+|1|1|INT$n$ 핀의 상승 에지가 인터럽트를 비동기적으로 발생한다.|
+
+```c
+// INT7에 상승 에지를 사용하도록 하기 위해서 ISC71을 1로 설정한다.
+EICRA = 0x10000000;
+
+// 혹은 이렇게도 쓸 수 있다.
+EICRA = (1 << ISC31);
+
+// INT6과 INT7에 상승 에지를 사용하도록 하기위해서 ISC71, ISC70, ISC61, ISC60을 전부 1로 설정한다.
+EICRA = 0x11110000;
+EICRA = (1 << ISC71) | (1 << ISC70) | (1 << ISC61) | (1 << ISC60);
+```
