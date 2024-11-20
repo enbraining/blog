@@ -1,0 +1,33 @@
+---
+title: "Tailscale 구성"
+description: ""
+date: 2024-11-06
+---
+
+import Callout from "@/components/Callout.astro";
+
+---
+
+Tailscale은 Wireguard 기반의 분산형 VPN이다.
+
+## 서버에 설치 - Linux
+
+리눅스 서버에 설치하는 것이지만, Tailscale은 메인 서버가 없는 분산형 VPN이기 때문에 클라이언트이기도 하다.
+
+```sh
+curl -fsSL https://tailscale.com/install.sh | sh
+```
+
+### 서버 구성하기
+
+설치만 하고 바로 실행한다면, 클라이언트 간의 통신만 가능할 뿐이지 서버를 통해서 외부와는 통신할 수 없기 때문에 (외부와 통신할 수는 있지만 서버를 거쳐서 통신하는 것은 아님), Exit Nodes를 설정해줘야 한다.
+
+```sh
+sudo tailscale up --advertise-exit-node
+```
+
+그리고 사이트에 접속해서 Machines에서 Exit Node로 등록할 서버의 옵션에서, Edit route settings - Exit node - Use as exit node를 활성화시켜 줘야 한다.
+
+## 클라이언트에 설치 - MacOS
+
+앱 스토어나 Tailscale 사이트에서 설치하면 된다.
