@@ -1,33 +1,32 @@
 import type { Metadata, Site, Socials } from "@types";
 
 export const SITE: Site = {
-  TITLE: "담청색 들개",
-  DESCRIPTION: "김동학의 테크 블로그",
-  EMAIL: "me@fodo.dev",
+  TITLE: "Donghak Kim",
+  DESCRIPTION: "Donghak Kim's tech blog",
+  EMAIL: "me@bricn.net",
   NUM_POSTS_ON_HOMEPAGE: 5,
   NUM_PROJECTS_ON_HOMEPAGE: 3,
 };
 
 export const HOME: Metadata = {
   TITLE: "Home",
-  DESCRIPTION: "Astro Micro is an accessible theme for Astro.",
+  DESCRIPTION: "this is home.",
 };
 
 export const BLOG: Metadata = {
   TITLE: "Blog",
-  DESCRIPTION: "A collection of articles on topics I am passionate about.",
+  DESCRIPTION: "this is blog.",
 };
 
 export const PROJECTS: Metadata = {
   TITLE: "Projects",
-  DESCRIPTION:
-    "A collection of my projects with links to repositories and live demos.",
+  DESCRIPTION: "this is projects.",
 };
 
 export const SOCIALS: Socials = [
   {
-    NAME: "X",
-    HREF: "https://x.com/enbraining",
+    NAME: "Bluesky",
+    HREF: "https://bsky.app/profile/bricn.net",
   },
   {
     NAME: "GitHub",
