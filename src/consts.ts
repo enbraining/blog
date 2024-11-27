@@ -25,10 +25,6 @@ export const PROJECTS: Metadata = {
 
 export const SOCIALS: Socials = [
   {
-    NAME: "Bluesky",
-    HREF: "https://bsky.app/profile/bricn.net",
-  },
-  {
     NAME: "GitHub",
     HREF: "https://github.com/enbraining",
   },
