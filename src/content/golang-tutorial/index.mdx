@@ -39,3 +39,31 @@ func main() {
 위의 `"rsc.io/quote"`와 같이 import 하기 위해선, `go mod tidy`를 통해서 라이브러리를 불러오는 과정이 필요합니다.
 
 해당 명령어로 라이브러리를 불러온 이후에는 `go run .`을 통해서 실행할 수 있습니다.
+
+## 함수의 구조
+
+```go
+package main
+
+import "fmt"
+
+func greet(name string) string {
+	message := fmt.Sprintf("Hi, %v. Welcome!", name)
+	return message
+}
+```
+
+Go 언어에서 함수의 구조는 아래와 같습니다.
+
+![Function sturcture in Golang](https://go.dev/doc/tutorial/images/function-syntax.png)
+
+해당 예제에서 사용된 `:=` 문법은 한 줄만 사용하여 변수를 정의하기 위해서 사용합니다.
+만약 해당 문법을 사용하지 않는다면 아래와 같이 표현할 수 있습니다.
+
+```go
+var message string
+message = fmt.Sprintf("Hi, %v. Welcome!", name)
+```
+
+이번 예제에서 fmt 패키지에 포함된 `Sprintf` 함수에서 첫번째 인자는 Format String, 
+그 다음 인자부터는 Format String 내의 %v에 들어갈 값을 지정할 때 사용합니다.
