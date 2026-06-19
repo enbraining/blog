@@ -5,13 +5,11 @@ import { SITE, HOME, SOCIALS } from "@consts";
 import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
-
 ---
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
@@ -23,9 +21,7 @@ const blog = (await getCollection("blog"))
       <div class="space-y-16">
         <section>
           <article class="space-y-4">
-            <p>
-              으뜸정보기술에 솔루션 아키텍트로 근무하고 있습니다.
-            </p>
+            <p>으뜸정보기술에 솔루션 아키텍트로 근무하고 있습니다.</p>
           </article>
         </section>
 
