@@ -1,6 +1,6 @@
 /**
  * Remark plugin: copies code block meta (e.g. title="...") to data-title / data-meta on the code node.
- * Used in content-collections transform so CodeBlock can read title for display.
+ * Used by Velite's MDX transform so CodeBlock can read titles for display.
  */
 export function remarkCodeMeta() {
     return (tree: any) => {

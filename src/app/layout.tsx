@@ -26,7 +26,7 @@ const geistMono = Geist_Mono({
 });
 
 const SITE_URL = "https://portfolio-ui-20.vercel.app";
-const SITE_TITLE = "John Doe's Portfolio";
+const SITE_TITLE = "Donghak Kim's Portfolio";
 
 /** SEO: used for <title>, Open Graph, Twitter cards, and favicon */
 export const metadata: Metadata = {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   description: DATA.description,
   keywords: [
-    "John Doe",
+    "Donghak Kim",
     "portfolio",
     "software engineer",
     "developer",

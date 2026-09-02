@@ -1,41 +1,21 @@
 ---
-title: "TypeScript Best Practices for Clean, Maintainable Code"
-publishedAt: "2024-12-08"
-updatedAt: "2024-12-08"
-author: "John Doe"
-summary: "Essential TypeScript patterns and practices that will make your codebase more robust and easier to maintain."
-image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=192&fit=crop"
+title: "이케아 마르쿠스 의자 후기"
+publishedAt: "2026-09-02"
+updatedAt: "2026-09-02"
 ---
 
-# TypeScript Best Practices for Clean, Maintainable Code
+이전에 쓰던 의자는 척추 곡선과 맞지 않을 뿐더러, 요추 지지대 위치도 변경 불가에 애매한 높이에 설치되어 있어 장시간 앉아있기 불편했습니다.
 
-TypeScript shines when it helps you model reality — not when it forces you to fight types all day. A few small defaults can make a codebase feel <mark>calmer, safer, and easier to refactor</mark>.
+심지어 의자 틸팅 시에 저항감이 전혀 없고 시소마냥 앞뒤로 까딱거립니다.
 
-<MediaContainer
-  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&fit=crop"
-  alt="TypeScript code on screen"
-/>
+안그래도 바꾸고 싶던 차에, 이케아 마르쿠스 의자가 가성비가 좋다는 추천을 받아서 바로 사버렸습니다.
 
-## Practical rules of thumb
+이렇게 생겼어요
 
-- Turn on strictness and fix the sharp edges early.
-- Prefer readable types over clever types.
-- Use unions for “one of these”, interfaces for “shape of this”.
-- Avoid `any` as a shortcut; it becomes ~~future debt~~ fast.
+![MARKUS 마르쿠스](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6lnck9LxFla9EcNZVk_m9pwF3XYAksDhI1Sx464hn9w)
 
-## One pattern worth memorizing
+[구매 링크](https://www.ikea.com/kr/ko/p/markus-office-chair-vissle-light-grey-90521859/)
 
-```ts
-type Result<T> =
-  | { ok: true; value: T }
-  | { ok: false; error: string };
+프레임도 스틸로 이루어져있어 매우 튼튼합니다.
 
-export function parseNumber(input: string): Result<number> {
-  const n = Number(input);
-  return Number.isFinite(n) ? { ok: true, value: n } : { ok: false, error: "Not a number" };
-}
-```
-
-## Wrap-up
-
-The best TypeScript code reads like good documentation: clear names, predictable shapes, and errors that point you to the fix.
+제 경우에는 중 사이즈로 구매했는데 다른 의자와 비교했을 때 최저 높이가 높은 편입니다.

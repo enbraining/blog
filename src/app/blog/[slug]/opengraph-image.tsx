@@ -2,7 +2,7 @@
  * Per-post OG image: 1200x630 PNG with post title (and optional image); params.slug from route.
  */
 import { ImageResponse } from "next/og";
-import { allPosts } from "content-collections";
+import { posts } from "@/.velite";
 import { DATA } from "@/data/resume";
 
 export const runtime = "edge";
@@ -102,16 +102,6 @@ const styles = {
         letterSpacing: "-0.02em",
         maxWidth: "900px",
     },
-    description: {
-        fontSize: "20px",
-        fontWeight: "400",
-        lineHeight: "1.5",
-        textAlign: "left",
-        maxWidth: "800px",
-        color: "#404040",
-        marginBottom: "16px",
-        textWrap: "balance",
-    },
     date: {
         fontSize: "16px",
         fontWeight: "400",
@@ -130,7 +120,7 @@ export default async function Image({
     try {
         const fontData = await getFontData();
         const { slug } = await params;
-        const post = allPosts.find((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
+        const post = posts.find((post) => post.slug === slug);
         const imageUrl = DATA.avatarUrl
             ? new URL(DATA.avatarUrl, DATA.url).toString()
             : undefined;
@@ -170,7 +160,6 @@ export default async function Image({
         }
 
         const title = post.title;
-        const description = post.summary || "";
         const publishedDate = post.publishedAt
             ? new Date(post.publishedAt).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -192,9 +181,6 @@ export default async function Image({
                             )}
                             <div style={styles.mainContainer}>
                                 <div style={styles.title}>{title}</div>
-                                {description && (
-                                    <div style={styles.description}>{description}</div>
-                                )}
                                 {publishedDate && <div style={styles.date}>{publishedDate}</div>}
                             </div>
                         </div>

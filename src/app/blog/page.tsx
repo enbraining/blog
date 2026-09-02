@@ -1,9 +1,9 @@
 /**
- * Blog index: lists all posts from content-collections with pagination.
+ * Blog index: lists all Velite posts with pagination.
  * Uses searchParams.page for ?page=; normalizePage + paginate handle bounds and slicing.
  */
 import BlurFade from "@/components/magicui/blur-fade";
-import { allPosts } from "content-collections";
+import { posts } from "@/.velite";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { paginate, normalizePage } from "@/lib/pagination";
@@ -34,7 +34,6 @@ export default async function BlogPage({
   const { page: pageParam } = await searchParams;
 
   /** Newest first; slug comes from file path (e.g. api-design-principles.mdx) */
-  const posts = allPosts;
   const sortedPosts = [...posts].sort((a, b) => {
     if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
       return -1;
@@ -63,7 +62,7 @@ export default async function BlogPage({
           <BlurFade delay={BLUR_FADE_DELAY * 2}>
             <div className="flex flex-col gap-5">
               {paginatedPosts.map((post, id) => {
-                const slug = post._meta.path.replace(/\.mdx$/, "");
+                const slug = post.slug;
                 const indexNumber = (pagination.page - 1) * PAGE_SIZE + id + 1;
                 return (
                   <BlurFade delay={BLUR_FADE_DELAY * 3 + id * 0.05} key={slug}>

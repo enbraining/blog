@@ -2,19 +2,19 @@
  * Single blog post: SSG via generateStaticParams; MDX body via MDXContent + mdxComponents.
  * generateMetadata sets title/OG per post; JSON-LD script for rich results.
  */
-import { allPosts } from "content-collections";
+import { posts } from "@/.velite";
 import { formatDate } from "@/lib/utils";
 import { DATA } from "@/data/resume";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MDXContent } from "@content-collections/mdx/react";
+import { VeliteMdxContent } from "@/components/velite-mdx-content";
 import { mdxComponents } from "@/mdx-components";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 /** Same sort as blog index: newest first, for prev/next links */
 function getSortedPosts() {
-  return [...allPosts].sort((a, b) => {
+  return [...posts].sort((a, b) => {
     if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
       return -1;
     }
@@ -24,9 +24,7 @@ function getSortedPosts() {
 
 /** Pre-render a static page for each post slug at build time */
 export async function generateStaticParams() {
-  return allPosts.map((post) => ({
-    slug: post._meta.path.replace(/\.mdx$/, ""),
-  }));
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 /** Per-post SEO: title, description, Open Graph, Twitter; used for social previews */
@@ -38,18 +36,14 @@ export async function generateMetadata({
   }>;
 }): Promise<Metadata | undefined> {
   const { slug } = await params;
-  const post = allPosts.find((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
+  const post = posts.find((post) => post.slug === slug);
 
   if (!post) {
     return undefined;
   }
 
-  let {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    image,
-  } = post;
+  const { title, publishedAt: publishedTime } = post;
+  const description = "Thoughts on software development.";
 
   return {
     title,
@@ -60,21 +54,13 @@ export async function generateMetadata({
       type: "article",
       publishedTime,
       url: `${DATA.url}/blog/${slug}`,
-      ...(image && {
-        images: [
-          {
-            url: `${DATA.url}${image}`,
-          },
-        ],
-      }),
+      images: [`${DATA.url}/blog/${slug}/opengraph-image`],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(image && {
-        images: [`${DATA.url}${image}`],
-      }),
+      images: [`${DATA.url}/blog/${slug}/opengraph-image`],
     },
   };
 }
@@ -89,7 +75,7 @@ export default async function Blog({
   const { slug } = await params;
   const sortedPosts = getSortedPosts();
   const currentIndex = sortedPosts.findIndex(
-    (p) => p._meta.path.replace(/\.mdx$/, "") === slug
+    (post) => post.slug === slug
   );
   const post = sortedPosts[currentIndex];
 
@@ -100,8 +86,7 @@ export default async function Blog({
   const previousPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
 
-  const getSlug = (post: (typeof sortedPosts)[0]) =>
-    post._meta.path.replace(/\.mdx$/, "");
+  const getSlug = (post: (typeof sortedPosts)[0]) => post.slug;
 
   /** Schema.org BlogPosting for search engines (rich snippets) */
   const jsonLdContent = JSON.stringify({
@@ -110,10 +95,7 @@ export default async function Blog({
     headline: post.title,
     datePublished: post.publishedAt,
     dateModified: post.publishedAt,
-    description: post.summary,
-    image: post.image
-      ? `${DATA.url}${post.image}`
-      : `${DATA.url}/blog/${slug}/opengraph-image`,
+    image: `${DATA.url}/blog/${slug}/opengraph-image`,
     url: `${DATA.url}/blog/${slug}`,
     author: {
       "@type": "Person",
@@ -156,7 +138,7 @@ export default async function Blog({
         />
       </div>
       <article className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
-        <MDXContent code={post.mdx} components={mdxComponents} />
+        <VeliteMdxContent code={post.code} components={mdxComponents} />
       </article>
 
       <nav className="mt-12 pt-8 max-w-2xl">

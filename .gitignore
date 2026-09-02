@@ -42,3 +42,6 @@ dist
 *.tsbuildinfo
 next-env.d.ts
 .content-collections
+
+# Valite
+.velite

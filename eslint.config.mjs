@@ -1,5 +1,5 @@
 /**
- * ESLint flat config: Next.js core-web-vitals rules; global ignores for .next, build output, and .content-collections.
+ * ESLint flat config: Next.js core-web-vitals rules; global ignores for generated build output.
  */
 import { defineConfig, globalIgnores } from 'eslint/config'
 import nextVitals from 'eslint-config-next/core-web-vitals'
@@ -13,7 +13,7 @@ const eslintConfig = defineConfig([
         'out/**',
         'build/**',
         'next-env.d.ts',
-        '.content-collections/**',
+        '.velite/**',
     ]),
 ])
 

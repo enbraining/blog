@@ -1,6 +1,6 @@
 /**
  * Custom components for MDX blog posts: pre -> CodeBlock (syntax highlight), hr/table/code styling, MediaContainer.
- * Passed to <MDXContent components={mdxComponents} /> in blog/[slug]/page.tsx.
+ * Passed to VeliteMdxContent in blog/[slug]/page.tsx.
  */
 import { CodeBlock } from "@/components/mdx/code-block";
 import { MediaContainer } from "@/components/mdx/media-container";
