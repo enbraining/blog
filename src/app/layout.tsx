@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "katex/dist/katex.min.css";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
 
 /** Google fonts: applied via CSS variables (--font-sans, --font-mono) for Tailwind */

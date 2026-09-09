@@ -233,4 +233,20 @@
     @apply border-b-0;
   }
 
+  /* KaTeX: give text lines room for tall inline math (\frac, \sqrt) so rows don't overlap */
+  .prose :where(p, li, td, th):has(.katex:not(.katex-display *)) {
+    line-height: 2.1;
+  }
+
+  .prose :where(.katex):not(:where([class~="not-prose"] *)) {
+    font-size: 1em;
+  }
+
+  .prose :where(.katex-display):not(:where([class~="not-prose"] *)) {
+    @apply my-5;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.25rem 0;
+  }
+
 }

@@ -1,4 +1,6 @@
 import { defineCollection, defineConfig, s } from "velite";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import { remarkCodeMeta } from "./src/lib/remark-code-meta";
 
 const posts = defineCollection({
@@ -16,7 +18,8 @@ const posts = defineCollection({
 export default defineConfig({
   root: "content",
   mdx: {
-    remarkPlugins: [remarkCodeMeta],
+    remarkPlugins: [remarkCodeMeta, remarkMath],
+    rehypePlugins: [rehypeKatex],
   },
   output: {
     data: ".velite",

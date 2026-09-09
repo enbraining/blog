@@ -19,29 +19,31 @@ why are you serious? -> asdfouhaivsnkdla2rv3h2vjohi2
 
 그렇기에 어떤 입력 값들은 서로 동일한 출력 값이 발생하는 충돌 현상이 일어날 수 밖에 없습니다.
 
-이는 고정된 길이의 출력 값을 출력하는 해시 함수의 특성상 SHA-2, SHA-3 등 어떤 알고리즘을 써도 해결이 불가합니다.
-
 하지만 길이를 늘려서 충돌이 발생할 확률을 낮출 수는 있겠죠?
 
-보편적으로 암호 알고리즘은 128비트 이상의 복잡도를 가질 것을 권장합니다.
+보편적으로 암호 알고리즘은 128비트($2^{128}$) 이상의 경우의 수를 가질 것을 권장합니다.
 
 그럼 왜 SHA-128이 아니라 SHA-256 알고리즘을 쓰는 걸까요?
 
-## 비둘기 집의 원리
+## 생일 경계 문제
 
-![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjpjYiFsZwclcz-oOn_7oGz5a2E1561tkkzD7pQtirRg&s=10)
+생일 경계 문제는 한 집단에서 최소 몇명이 있어야 최소 2명 이상 사람의 생일이 겹칠 가능성이 50% 이상이 될지에 대한 문제입니다.
 
-위 사진을 보면 비둘기가 각자 한칸씩 차지하고 있는 모습을 확인할 수 있습니다.
+예를 들어 23명의 사람이 있다고 해봅시다.
 
-운이 좋다면 한칸씩 차지하는 경우의 수도 있겠지만, 통계적으로는 전체 칸 수의 제곱근(√n) 정도만 시도한 시점부터 똑같은 칸에 비둘기가 들어갈 확률이 급격히 높아지게 됩니다. 절반이 아니라 제곱근이라는 점이 핵심입니다.
+A의 생일이 충돌하지 않을 확률은 $\frac{365}{365}$, B의 생일이 A의 생일과 충돌하지 않을 확률은 $\frac{364}{365}$이고, C는 $\frac{363}{365}$일 것입니다.
 
-SHA-256도 이와 비슷하게 2의 256제곱(256비트) 개의 모든 경우의 수를 다 시도하지 않더라도, 2의 128제곱(128비트) 개의 경우의 수를 시도한 이후부터는 충돌이 발생할 확률이 기하급수적으로 올라갑니다.
+이런식으로 아래와 같이 마저 계산을 이어나가면 23명이 있을 때 생일이 충돌될 확률은 대략적으로 50% 가까이 나옵니다.
 
-> 정확히는 2의 2분의 n 제곱 개 경우의 수를 시도한 이후부터 충돌 확률이 기하급수적으로 상승합니다. (n은 비트 길이)
+$$
+\frac{364}{365} \times \frac{363}{365} \times \cdots \times \frac{343}{365} \approx 0.4927
+$$
+
+전체 경우의 수가 n개라고 했을 때, $n^{1/2}$번 시도한 이후부터 충돌 확률은 50% 이상으로 상승합니다.
+
+SHA-256에도 이와 동일하게 적용해보면 $2^{256 \times \frac{1}{2}} = 2^{128}$번 시도한 시점부터 충돌 확률이 급상승합니다.
 
 <BirthdayCollisionSimulator />
-
-위 시뮬레이션은 SHA-256 출력을 12비트로 잘라낸 것이지만, 잘라낸 길이가 몇 비트든 생일 문제의 한계는 그대로입니다. 12비트면 2^6, 256비트면 2^128번째 시도 부근에서 충돌 확률이 치솟습니다.
 
 여기서 해시 함수가 가져야할 성질 중 한가지를 찾아볼 수 있습니다. 바로 충돌 저항성입니다.
 
@@ -54,3 +56,39 @@ SHA-256도 이와 비슷하게 2의 256제곱(256비트) 개의 모든 경우의
 - 역상 저항성: 해시 함수에 대한 역함수는 없음
 - 제2 역상 저항성: 입력 값에 대한 해시 값이 존재할 때, 이와 동일한 해시 값을 만들어내는 다른 입력값은 없음
 - 충돌 저항성: 임의의 두 입력값에 대해 해시 값이 동일할 수 없음
+
+# 결함이 발견된 함수들
+
+SHA-1은 해당 알고리즘 내에서 사용된 압축 함수 구조에서 수학적 약점이 발견되었습니다.
+
+실제로 구글에서 GPU 클러스터 연산을 통해 다른 입력 값에 대해 동일한 해시 값이 나오는 것을 발견하였습니다.
+
+위와 같이 제2 역상 저항성을 만족하지 못하기에 SHA-1은 더 이상 사용되지 않습니다.
+
+현재는 대부분 SHA-2를 사용하며, 이는 224, 256, 384, 512비트로 이루어진 해시 값을 지원합니다.
+
+- SHA-224
+- SHA-256
+- SHA-384
+- SHA-512
+- SHA-512/224
+- SHA-512/256
+
+# SHA-2의 구조
+
+SHA-2는 아래와 같이 압축 함수가 직렬로 연결된 구조입니다.
+
+여기서 말하는 압축 함수는 두 값을 입력받아 하나의 값만큼의 길이로 압축해서 출력하는 함수입니다. (입력보다 더 짧게 압축하여 출력하는 함수)
+
+<MerkleDamgardSimulator />
+
+SHA-2에서는 머클-담고르 구조와 데이비스-마이어 구조를 바탕으로 설계되었습니다.
+
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2FbmLp1P%2FbtsPDKGjCCD%2FAAAAAAAAAAAAAAAAAAAAAHiY_0V8hMOSTlxhbnJrZtI6h-yr3Dbmn-flpvQuO9U5%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1790780399%26allow_ip%3D%26allow_referer%3D%26signature%3DNHr0JS4VliBxIAIrHeItOLIASk4%253D)
+
+머클-담고르 구조는 압축 함수가 연결된 체인 형태의 구조를 말합니다.
+
+그리고 데이비스-마이어 구조는 체인을 구성하는 압축 함수 내부적인 구조입니다.
+
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdna%2Fc94PGs%2FbtsPEEMoLo2%2FAAAAAAAAAAAAAAAAAAAAAGNchJsMNruPM5Ag9ADimGyRrhdZvpKQNsqSHscENXRE%2Fimg.png%3Fcredential%3DyqXZFxpELC7KVnFOS48ylbz2pIh7yKj8%26expires%3D1790780399%26allow_ip%3D%26allow_referer%3D%26signature%3DJiIKZHok%252FygeAyijHyAG9pmp9zM%253D)
+
